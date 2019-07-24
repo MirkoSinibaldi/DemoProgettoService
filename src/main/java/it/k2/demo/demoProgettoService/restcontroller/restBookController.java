@@ -6,6 +6,7 @@ import it.k2.demo.demoProgettoService.models.entities.Author;
 import it.k2.demo.demoProgettoService.models.entities.Book;
 import it.k2.demo.demoProgettoService.services.AuthorService;
 import it.k2.demo.demoProgettoService.services.BookService;
+import it.k2.demo.demoProgettoService.services.LibrarianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +27,9 @@ public class restBookController {
     @Autowired
     AuthorService authorService;
 
+    @Autowired
+    LibrarianService librarianService;
+
     @RequestMapping(value = "/getAllBooks", method = RequestMethod.GET)
     public List<BookDto> getAllBooks()
     {
@@ -37,22 +41,12 @@ public class restBookController {
 
         for(int j = 0; j < entityAuthor.size(); j++)
         {
-            AuthorDto authorDto = new AuthorDto();
+            modelAuthor.add(librarianService.fromAuthorEntityToAuthorDto(entityAuthor.get(j)));
 
-            authorDto.setName(entityAuthor.get(j).getName());
-            modelAuthor.add(authorDto);
-
-            for(int i = 0; i < entityBooks.size(); i++)
-            {
-                BookDto bookDto = new BookDto();
-
-                bookDto.setAuthorsDto(modelAuthor);
-                bookDto.setTitle(entityBooks.get(i).getTitle());
-                bookDto.setGenre(entityBooks.get(i).getGenre());
-                bookDto.setPublisher(entityBooks.get(i).getPublisher());
-
-                modelBooks.add(bookDto);
-            }
+                for(int i = 0; i < entityBooks.size(); i++)
+                {
+                    modelBooks.add(librarianService.fromBookEntityToBookDto(entityBooks.get(i), ));
+                }
         }
 
         return modelBooks;

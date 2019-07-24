@@ -1,5 +1,9 @@
 package it.k2.demo.demoProgettoService.services;
 
+import it.k2.demo.demoProgettoService.models.AuthorDto;
+import it.k2.demo.demoProgettoService.models.BookDto;
+import it.k2.demo.demoProgettoService.models.GenreDto;
+import it.k2.demo.demoProgettoService.models.PublisherDto;
 import it.k2.demo.demoProgettoService.models.entities.Author;
 import it.k2.demo.demoProgettoService.models.entities.Book;
 import it.k2.demo.demoProgettoService.models.entities.Genre;
@@ -161,9 +165,46 @@ public class LibrarianService {
                 authorsAndBooks.add("Autore: " + author.getName() + " " + "Titolo: " +  books.get(i).getTitle() + " " + "Genere: " +  books.get(i).getGenre().getDescription() + " " + "Editore: " + " " + books.get(i).getPublisher().getName());
             }
         }
-
         return authorsAndBooks;
+    }
 
+    public AuthorDto fromAuthorEntityToAuthorDto(Author author)
+    {
+        AuthorDto authorDto = new AuthorDto();
+        authorDto.setName(author.getName());
+
+        return authorDto;
+    }
+
+
+    public GenreDto fromGenreEntityToGenreDto(Genre genre)
+    {
+        GenreDto genreDto = new GenreDto();
+        genreDto.setDescription(genre.getDescription());
+
+        return genreDto;
+    }
+
+
+    public PublisherDto fromPublisherEntityToPublisherDto(Publisher publisher)
+    {
+        PublisherDto publisherDto = new PublisherDto();
+        publisherDto.setName(publisherDto.getName());
+
+        return publisherDto;
+    }
+
+
+    public void fromBookEntityToBookDto(Book book, Author author, Genre genre, Publisher publisher)
+    {
+        BookDto bookDto = new BookDto();
+
+        fromAuthorEntityToAuthorDto(author);
+        bookDto.setTitle(book.getTitle());
+        fromGenreEntityToGenreDto(genre);
+        fromPublisherEntityToPublisherDto(publisher);
+        bookDto.setPrice(book.getPrice());
+        bookDto.setQuantity(book.getQuantity());
     }
 
 }
