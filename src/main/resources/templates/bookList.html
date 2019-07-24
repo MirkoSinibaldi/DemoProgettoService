@@ -1,9 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Elenco Libri </title>
-</head>
-<body>
-<h1>Elenco libri:  <span th:text="${books}"></span>...</h1>
-</body>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Elenco Libri </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <h1>Elenco libri:  <span id = "elencoLibri"></span>...</h1>
+
+        <script>
+            $ajax
+            ({
+                url: "http://localhost:8091/books/getAllBooks",
+                type : "GET",
+                success:function(result)
+                {
+                    console.log(result);
+                    var elencoLibriString ="";
+                    for(var i=0; i<result.length; i++){
+                        var libro = result[i];
+                        var libroString = "";
+                        libroString+="Titolo: "+libro.title+" ";
+                        libroString+="Pub: "+libro.publisher+" ";
+                        libroString+="Pub: "+libro.genre+" "
+                        var autori = libro.authors;
+                        libroString+="Autori: ";
+                        for(var j=0; j<autori.length; j++){
+                             libroString+=autori[j].name;
+                        }
+
+                        libroString+=". ";
+
+                        elencoLibriString+=libroString;
+                    }
+                    $("#elencoLibri").HTML(elencoLibriString);
+                }, error: function(request, state, errors){
+                    console.log(errors);
+                }
+            });
+        </script>
+    </body>
 </html>

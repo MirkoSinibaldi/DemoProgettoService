@@ -2,23 +2,13 @@ package it.k2.demo.demoProgettoService.models;
 
 public class PublisherDto
 {
-    private Integer id;
     private String name;
 
     public PublisherDto() {}
 
-    public PublisherDto(Integer id, String name)
+    public PublisherDto(String name)
     {
-        this.id = id;
         this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
