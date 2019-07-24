@@ -11,7 +11,7 @@
         <h1>Elenco libri:  <span id = "elencoLibri"></span>...</h1>
 
         <script>
-            $ajax
+            $.ajax
             ({
                 url: "http://localhost:8091/books/getAllBooks",
                 type : "GET",
@@ -23,9 +23,11 @@
                         var libro = result[i];
                         var libroString = "";
                         libroString+="Titolo: "+libro.title+" ";
-                        libroString+="Pub: "+libro.publisher+" ";
-                        libroString+="Pub: "+libro.genre+" "
-                        var autori = libro.authors;
+                        libroString+="Quantita: "+libro.quantity+" ";
+                        libroString+="Prezzo: "+libro.price+" ";
+                        libroString+="Genre: "+libro.genreDto.description+" ";
+                        libroString+="Publisher: "+libro.publisherDto.name+" ";
+                        var autori = libro.authorsDto;
                         libroString+="Autori: ";
                         for(var j=0; j<autori.length; j++){
                              libroString+=autori[j].name;
@@ -35,7 +37,7 @@
 
                         elencoLibriString+=libroString;
                     }
-                    $("#elencoLibri").HTML(elencoLibriString);
+                    $("#elencoLibri").html(elencoLibriString);
                 }, error: function(request, state, errors){
                     console.log(errors);
                 }

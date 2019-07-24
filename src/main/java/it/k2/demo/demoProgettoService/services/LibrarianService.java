@@ -186,18 +186,20 @@ public class LibrarianService {
 
     public PublisherDto fromPublisherEntityToPublisherDto(Publisher publisher) {
         PublisherDto publisherDto = new PublisherDto();
-        publisherDto.setName(publisherDto.getName());
+        publisherDto.setName(publisher.getName());
 
         return publisherDto;
     }
 
 
-    public void fromBookEntityToBookDto(Book book) {
+    public BookDto fromBookEntityToBookDto(Book book) {
         BookDto bookDto = new BookDto();
 
         bookDto.setTitle(book.getTitle());
         bookDto.setPrice(book.getPrice());
         bookDto.setQuantity(book.getQuantity());
+
+        return bookDto;
     }
 
 
@@ -205,17 +207,15 @@ public class LibrarianService {
 
         List<BookDto> bookDtoList = new ArrayList<>();
         List<Book> bookList = bookService.getBookInDatabase();
-        List<Author> authorList = authorService.getAuthorInDataBase();
-        Set<AuthorDto> authorDtoSet = new HashSet<>();
 
         for (int i = 0; i < bookList.size(); i++) {
 
             BookDto bookDto = new BookDto();
+            Set<AuthorDto> authorDtoSet = new HashSet<>();
 
-            fromBookEntityToBookDto(bookList.get(i));
-
+            bookDto = fromBookEntityToBookDto(bookList.get(i));
+//
             bookDto.setGenreDto(fromGenreEntityToGenreDto(bookList.get(i).getGenre()));
-
             bookDto.setPublisherDto(fromPublisherEntityToPublisherDto(bookList.get(i).getPublisher()));
 
             for (Author author : bookList.get(i).getAuthors()) {

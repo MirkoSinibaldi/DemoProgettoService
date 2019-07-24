@@ -12,7 +12,7 @@ import java.util.List;
 
     @RestController
     @RequestMapping("/books")
-    public class restBookController {
+    public class RestBookController {
 
         @Autowired
         LibrarianService librarianService;
@@ -24,7 +24,6 @@ import java.util.List;
             List<BookDto> booksDto = librarianService.getAllModelBooks();
 
             return booksDto;
-
         }
 }
 
