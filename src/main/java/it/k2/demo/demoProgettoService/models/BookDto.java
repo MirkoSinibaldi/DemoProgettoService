@@ -12,17 +12,17 @@ public class BookDto {
     private double price;
     private Genre genre;
     private Publisher publisher;
-    private Set<Author> authors;
+    private Set<AuthorDto> authorsDto;
 
     public BookDto() { }
 
-    public BookDto(String title, Integer quantity, double price, Genre genre, Publisher publisher, Set<Author> authors) {
+    public BookDto(String title, Integer quantity, double price, Genre genre, Publisher publisher, Set<AuthorDto> authorsDto) {
         this.title = title;
         this.quantity = quantity;
         this.price = price;
         this.genre = genre;
         this.publisher = publisher;
-        this.authors = authors;
+        this.authorsDto = authorsDto;
     }
 
     public String getTitle() {return title;}
@@ -37,6 +37,6 @@ public class BookDto {
     public Publisher getPublisher() {return publisher;}
 
     public void setPublisher(Publisher publisher) {this.publisher = publisher;}
-    public Set<Author> getAuthors() {return authors;}
-    public void setAuthors(Set<Author> authors) {this.authors = authors;}
+    public Set<AuthorDto> getAuthorsDto() {return authorsDto;}
+    public void setAuthorsDto(Set<AuthorDto> authorsDto) {this.authorsDto = authorsDto;}
 }

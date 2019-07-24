@@ -46,6 +46,7 @@ public class restBookController {
             {
                 BookDto bookDto = new BookDto();
 
+                bookDto.setAuthorsDto(modelAuthor);
                 bookDto.setTitle(entityBooks.get(i).getTitle());
                 bookDto.setGenre(entityBooks.get(i).getGenre());
                 bookDto.setPublisher(entityBooks.get(i).getPublisher());
