@@ -34,13 +34,13 @@ public class LibrarianService {
     PublisherRepository publisherRepository;
 
     @Autowired
-    SaveService saveManager;
+    SaveService saveService;
 
     @Autowired
-    BookService bookManager;
+    BookService bookService;
 
     @Autowired
-    AuthorService authorManager;
+    AuthorService authorService;
 
 
     public void insertNewBook(Book book) {
@@ -62,7 +62,7 @@ public class LibrarianService {
 
 
         try {
-            saveManager.saveGenre(genre);
+            saveService.saveGenre(genre);
         } catch (DataIntegrityViolationException e) {
             log.info("Errore salvataggio GENERE");
 
@@ -70,7 +70,7 @@ public class LibrarianService {
 
 
         try {
-            saveManager.savePublisher(publisher);
+            saveService.savePublisher(publisher);
         } catch (DataIntegrityViolationException e1) {
             log.info("Errore salvataggio EDITORE");
 
@@ -88,7 +88,7 @@ public class LibrarianService {
         for (Author authorBook : authorList) {
 
             try {
-                saveManager.saveAuthor(authorBook);
+                saveService.saveAuthor(authorBook);
             } catch (DataIntegrityViolationException e3) {
                 log.info("Errore salvataggio Autore");
 
@@ -105,7 +105,7 @@ public class LibrarianService {
                 book.setAuthors(authorList);
             }
             try {
-                saveManager.saveBook(book);
+                saveService.saveBook(book);
             } catch (DataIntegrityViolationException e2) {
                 log.info("Errore salvataggio LIBRO");
             }
@@ -117,7 +117,7 @@ public class LibrarianService {
 
     public List<String> getBookInDatabaseToString() {
 
-        List<Book> books = bookManager.getBookInDatabase();
+        List<Book> books = bookService.getBookInDatabase();
         List<String> newBooksList = new ArrayList<>();
 
         for (int i = 0; i < books.size(); i++) {
@@ -133,7 +133,7 @@ public class LibrarianService {
     /* ***********************************************************************************************/
     public List<String> getAuthorInDatabaseToString() {
 
-        List<Author> authors = authorManager.getAuthorInDataBase();
+        List<Author> authors = authorService.getAuthorInDataBase();
         List<String> newAuthorList = new ArrayList<>();
 
         for (int i = 0; i < authors.size(); i++) {
@@ -150,7 +150,7 @@ public class LibrarianService {
 
     public List<String> getAuthorsAndBooksToString() {
 
-        List<Author> authors = authorManager.getAuthorInDataBase();
+        List<Author> authors = authorService.getAuthorInDataBase();
 
         List<String> authorsAndBooks = new ArrayList<>();
 
@@ -159,17 +159,16 @@ public class LibrarianService {
 
         for (Author author : authors) {
             author.getName();
-            books = authorManager.getBooksByAuthor(author.getName());
+            books = authorService.getBooksByAuthor(author.getName());
 
-            for(int i = 0; i < books.size(); i++) {
-                authorsAndBooks.add("Autore: " + author.getName() + " " + "Titolo: " +  books.get(i).getTitle() + " " + "Genere: " +  books.get(i).getGenre().getDescription() + " " + "Editore: " + " " + books.get(i).getPublisher().getName());
+            for (int i = 0; i < books.size(); i++) {
+                authorsAndBooks.add("Autore: " + author.getName() + " " + "Titolo: " + books.get(i).getTitle() + " " + "Genere: " + books.get(i).getGenre().getDescription() + " " + "Editore: " + " " + books.get(i).getPublisher().getName());
             }
         }
         return authorsAndBooks;
     }
 
-    public AuthorDto fromAuthorEntityToAuthorDto(Author author)
-    {
+    public AuthorDto fromAuthorEntityToAuthorDto(Author author) {
         AuthorDto authorDto = new AuthorDto();
         authorDto.setName(author.getName());
 
@@ -177,8 +176,7 @@ public class LibrarianService {
     }
 
 
-    public GenreDto fromGenreEntityToGenreDto(Genre genre)
-    {
+    public GenreDto fromGenreEntityToGenreDto(Genre genre) {
         GenreDto genreDto = new GenreDto();
         genreDto.setDescription(genre.getDescription());
 
@@ -186,8 +184,7 @@ public class LibrarianService {
     }
 
 
-    public PublisherDto fromPublisherEntityToPublisherDto(Publisher publisher)
-    {
+    public PublisherDto fromPublisherEntityToPublisherDto(Publisher publisher) {
         PublisherDto publisherDto = new PublisherDto();
         publisherDto.setName(publisherDto.getName());
 
@@ -195,16 +192,42 @@ public class LibrarianService {
     }
 
 
-    public void fromBookEntityToBookDto(Book book, Author author, Genre genre, Publisher publisher)
-    {
+    public void fromBookEntityToBookDto(Book book) {
         BookDto bookDto = new BookDto();
 
-        fromAuthorEntityToAuthorDto(author);
         bookDto.setTitle(book.getTitle());
-        fromGenreEntityToGenreDto(genre);
-        fromPublisherEntityToPublisherDto(publisher);
         bookDto.setPrice(book.getPrice());
         bookDto.setQuantity(book.getQuantity());
     }
+
+
+    public List<BookDto> getAllModelBooks() {
+
+        List<BookDto> bookDtoList = new ArrayList<>();
+        List<Book> bookList = bookService.getBookInDatabase();
+        List<Author> authorList = authorService.getAuthorInDataBase();
+        Set<AuthorDto> authorDtoSet = new HashSet<>();
+
+        for (int i = 0; i < bookList.size(); i++) {
+
+            BookDto bookDto = new BookDto();
+
+            fromBookEntityToBookDto(bookList.get(i));
+
+            bookDto.setGenreDto(fromGenreEntityToGenreDto(bookList.get(i).getGenre()));
+
+            bookDto.setPublisherDto(fromPublisherEntityToPublisherDto(bookList.get(i).getPublisher()));
+
+            for (Author author : bookList.get(i).getAuthors()) {
+                authorDtoSet.add(fromAuthorEntityToAuthorDto(author));
+            }
+
+            bookDto.setAuthorsDto((authorDtoSet));
+            bookDtoList.add(bookDto);
+        }
+
+        return bookDtoList;
+    }
+
 
 }

@@ -1,8 +1,5 @@
 package it.k2.demo.demoProgettoService.models;
 
-import it.k2.demo.demoProgettoService.models.entities.Author;
-import it.k2.demo.demoProgettoService.models.entities.Genre;
-import it.k2.demo.demoProgettoService.models.entities.Publisher;
 import java.util.Set;
 
 public class BookDto {
@@ -10,33 +7,68 @@ public class BookDto {
     private String title;
     private Integer quantity;
     private double price;
-    private Genre genre;
-    private Publisher publisher;
+    private GenreDto genreDto;
+    private PublisherDto publisherDto;
     private Set<AuthorDto> authorsDto;
 
-    public BookDto() { }
+    public BookDto() {
+    }
 
-    public BookDto(String title, Integer quantity, double price, Genre genre, Publisher publisher, Set<AuthorDto> authorsDto) {
+    public BookDto(String title, Integer quantity, double price, GenreDto genreDto, PublisherDto publisherDto, Set<AuthorDto> authorsDto) {
         this.title = title;
         this.quantity = quantity;
         this.price = price;
-        this.genre = genre;
-        this.publisher = publisher;
+        this.genreDto = genreDto;
+        this.publisherDto = publisherDto;
         this.authorsDto = authorsDto;
     }
 
-    public String getTitle() {return title;}
-    public void setTitle(String title) {this.title = title;}
-    public Integer getQuantity() {return quantity;}
-    public void setQuantity(Integer quantity) {this.quantity = quantity;}
+    public String getTitle() {
+        return title;
+    }
 
-    public double getPrice() {return price;}
-    public void setPrice(double price) {this.price = price;}
-    public Genre getGenre() {return genre;}
-    public void setGenre(Genre genre) {this.genre = genre;}
-    public Publisher getPublisher() {return publisher;}
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-    public void setPublisher(Publisher publisher) {this.publisher = publisher;}
-    public Set<AuthorDto> getAuthorsDto() {return authorsDto;}
-    public void setAuthorsDto(Set<AuthorDto> authorsDto) {this.authorsDto = authorsDto;}
+    public double getPrice() {
+        return price;
+    }
+
+    public GenreDto getGenreDto() {
+        return genreDto;
+    }
+
+    public PublisherDto getPublisherDto() {
+        return publisherDto;
+    }
+
+    public Set<AuthorDto> getAuthorsDto() {
+        return authorsDto;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setGenreDto(GenreDto genreDto) {
+        this.genreDto = genreDto;
+    }
+
+    public void setPublisherDto(PublisherDto publisherDto) {
+        this.publisherDto = publisherDto;
+    }
+
+    public void setAuthorsDto(Set<AuthorDto> authorsDto) {
+        this.authorsDto = authorsDto;
+    }
 }
+
