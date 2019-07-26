@@ -214,7 +214,7 @@ public class LibrarianService {
             Set<AuthorDto> authorDtoSet = new HashSet<>();
 
             bookDto = fromBookEntityToBookDto(bookList.get(i));
-//
+
             bookDto.setGenreDto(fromGenreEntityToGenreDto(bookList.get(i).getGenre()));
             bookDto.setPublisherDto(fromPublisherEntityToPublisherDto(bookList.get(i).getPublisher()));
 

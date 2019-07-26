@@ -10,38 +10,38 @@
     <body>
         <h1>Elenco libri:  <span id = "elencoLibri"></span>...</h1>
 
-        <script>
-            $.ajax
-            ({
-                url: "http://localhost:8091/books/getAllBooks",
-                type : "GET",
-                success:function(result)
-                {
-                    console.log(result);
-                    var elencoLibriString ="";
-                    for(var i=0; i<result.length; i++){
-                        var libro = result[i];
-                        var libroString = "";
-                        libroString+="Titolo: "+libro.title+" ";
-                        libroString+="Quantita: "+libro.quantity+" ";
-                        libroString+="Prezzo: "+libro.price+" ";
-                        libroString+="Genre: "+libro.genreDto.description+" ";
-                        libroString+="Publisher: "+libro.publisherDto.name+" ";
-                        var autori = libro.authorsDto;
-                        libroString+="Autori: ";
-                        for(var j=0; j<autori.length; j++){
-                             libroString+=autori[j].name;
-                        }
+<!--        <script>-->
+<!--            $.ajax-->
+<!--            ({-->
+<!--                url: "http://localhost:8091/books/getAllBooks",-->
+<!--                type : "GET",-->
+<!--                success:function(result)-->
+<!--                {-->
+<!--                    console.log(result);-->
+<!--                    var elencoLibriString ="";-->
+<!--                    for(var i=0; i<result.length; i++){-->
+<!--                        var libro = result[i];-->
+<!--                        var libroString = "";-->
+<!--                        libroString+="Titolo: "+libro.title+" ";-->
+<!--                        libroString+="Quantita: "+libro.quantity+" ";-->
+<!--                        libroString+="Prezzo: "+libro.price+" ";-->
+<!--                        libroString+="Genre: "+libro.genreDto.description+" ";-->
+<!--                        libroString+="Publisher: "+libro.publisherDto.name+" ";-->
+<!--                        var autori = libro.authorsDto;-->
+<!--                        libroString+="Autori: ";-->
+<!--                        for(var j=0; j<autori.length; j++){-->
+<!--                             libroString+=autori[j].name;-->
+<!--                        }-->
 
-                        libroString+=". ";
+<!--                        libroString+=". ";-->
 
-                        elencoLibriString+=libroString;
-                    }
-                    $("#elencoLibri").html(elencoLibriString);
-                }, error: function(request, state, errors){
-                    console.log(errors);
-                }
-            });
-        </script>
+<!--                        elencoLibriString+=libroString;-->
+<!--                    }-->
+<!--                    $("#elencoLibri").html(elencoLibriString);-->
+<!--                }, error: function(request, state, errors){-->
+<!--                    console.log(errors);-->
+<!--                }-->
+<!--            });-->
+<!--        </script>-->
     </body>
 </html>
